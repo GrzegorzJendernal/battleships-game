@@ -1,7 +1,11 @@
-const App = () => {
+import { GlobalStyle } from "./GlobalStyle";
 
+const App = () => {
   return (
-    <div>Tu będzie zajebiaszcza gra w statki</div>
+    <>
+      <GlobalStyle />
+      <div>Tu będzie zajebiaszcza gra w statki</div>
+    </>
   );
 };
 
