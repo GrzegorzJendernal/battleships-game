@@ -1,3 +1,4 @@
+import Board from "../components/Board/Board";
 import { GlobalStyle } from "./GlobalStyle";
 
 const App = () => {
@@ -5,6 +6,7 @@ const App = () => {
     <>
       <GlobalStyle />
       <div>Tu będzie zajebiaszcza gra w statki</div>
+      <Board />
     </>
   );
 };
