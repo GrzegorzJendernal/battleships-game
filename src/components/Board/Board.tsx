@@ -7,18 +7,18 @@ const Board = () => {
   return (
     <BoardContainer>
       {/* Etykiety kolumn */}
-      <Cell className="cell"></Cell> {/* Pusty górny lewy róg */}
+      <Cell></Cell> {/* Pusty górny lewy róg */}
       {columns.map((column, columnIndex) => (
-        <Cell key={columnIndex} className="cell column-label">
+        <Cell key={columnIndex}>
           {column}
         </Cell>
       ))}
       {/* Plansza gry */}
       {rows.map((row, rowIndex) => (
         <React.Fragment key={rowIndex}>
-          <Cell className="cell row-label">{row}</Cell>
+          <Cell>{row}</Cell>
           {columns.map((column, columnIndex) => (
-            <Cell key={columnIndex} className="cell">
+            <Cell key={columnIndex} id={`${column}${row}`}>
               
             </Cell>
           ))}
