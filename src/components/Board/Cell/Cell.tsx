@@ -1,6 +1,6 @@
 import { StyledCell } from "./cell.styled"
 
-const Cell = ({children, id, coordinate}: {children?: string, id?: string, coordinate?: number}) => {
+const Cell = ({children, id, coordinate}: CellProps) => {
   console.log(id, coordinate);
 
   return (
