@@ -1,5 +1,6 @@
 import React from "react";
-import { BoardContainer, Cell } from "./board.styled";
+import { BoardContainer } from "./board.styled";
+import Cell from "./Cell/Cell";
 
 const Board = () => {
   const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
@@ -9,18 +10,14 @@ const Board = () => {
       {/* Etykiety kolumn */}
       <Cell></Cell> {/* Pusty górny lewy róg */}
       {columns.map((column, columnIndex) => (
-        <Cell key={columnIndex}>
-          {column}
-        </Cell>
+        <Cell key={columnIndex}>{column}</Cell>
       ))}
       {/* Plansza gry */}
       {rows.map((row, rowIndex) => (
         <React.Fragment key={rowIndex}>
           <Cell>{row}</Cell>
           {columns.map((column, columnIndex) => (
-            <Cell key={columnIndex} id={`${column}${row}`}>
-              
-            </Cell>
+            <Cell key={columnIndex} id={`${column}${row}`} coordinate={+`${columnIndex}${rowIndex}`}>{`${+columnIndex}${+rowIndex}`}</Cell>
           ))}
         </React.Fragment>
       ))}
