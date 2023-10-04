@@ -1,10 +1,11 @@
 import React from "react";
 import { BoardContainer } from "./board.styled";
 import Cell from "./Cell/Cell";
+import { columns, rows } from "../../utils/labels";
 
 const Board = () => {
-  const columns = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  const rows = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
+
   return (
     <BoardContainer>
       {/* Etykiety kolumn */}
@@ -17,7 +18,11 @@ const Board = () => {
         <React.Fragment key={rowIndex}>
           <Cell>{row}</Cell>
           {columns.map((column, columnIndex) => (
-            <Cell key={columnIndex} id={`${column}${row}`} coordinate={+`${columnIndex}${rowIndex}`}>{`${+columnIndex}${+rowIndex}`}</Cell>
+            <Cell
+              key={columnIndex}
+              id={`${column}${row}`}
+              coordinate={+`${columnIndex}${rowIndex}`}
+            >{`${+columnIndex}${+rowIndex}`}</Cell>
           ))}
         </React.Fragment>
       ))}
