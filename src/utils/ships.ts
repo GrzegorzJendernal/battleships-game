@@ -1,13 +1,4 @@
-interface Ship {
-  name: string;
-  id: number;
-  length: number;
-  hit: boolean;
-  sunk: boolean;
-  orientation: "horizontal" | "vertical";
-}
-
-interface Ship {
+export interface Ship {
   name: string;
   id: number;
   length: number;
