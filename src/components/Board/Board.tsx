@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { BoardContainer } from "./board.styled";
 import Cell from "./Cell/Cell";
 import { columns, rows } from "../../utils/labels";
+import { useBoardState } from "../../utils/useBoardState";
+import React from "react";
 
-function createEmptyBoard() {
-  return rows.map(() => columns.map(() => undefined));
-}
 
 
 const Board = () => {
-  const [boardState, setBoardState] = useState(createEmptyBoard());
-
-  useEffect(() => {
-    const placeShipsRandomly = () => {
-      // Tworzymy nową planszę w oparciu o aktualny stan
-      const newBoard = createEmptyBoard();
-
-      // Umieszczamy statki na nowej planszy
-      // Tutaj możesz dostosować logikę rozmieszczania statków
-
-      setBoardState(newBoard);
-    };
-
-    // Wywołaj funkcję rozmieszczania statków na planszy
-    placeShipsRandomly();
-  }, []);
+  const boardState = useBoardState();
 
   return (
     <BoardContainer>
@@ -42,9 +25,8 @@ const Board = () => {
               key={columnIndex}
               id={`${columns[columnIndex]}${rows[rowIndex]}`}
               coordinate={+`${columnIndex}${rowIndex}`}
-            >
-              {cell}
-            </Cell>
+              occupied={cell !== undefined}
+            ></Cell>
           ))}
         </React.Fragment>
       ))}
