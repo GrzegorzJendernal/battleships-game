@@ -1,12 +1,3 @@
-export interface Ship {
-  name: string;
-  id: number;
-  length: number;
-  hit: boolean;
-  sunk: boolean;
-  orientation: "horizontal" | "vertical";
-}
-
 export let ships: Ship[] = [];
 
 const shipTypes = [
