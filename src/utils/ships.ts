@@ -30,5 +30,4 @@ const newShips: Ship[] = shipTypes.flatMap((shipType) => {
   }));
 });
 
-// Przypisujemy nową tablicę do zmiennej ships
 ships = newShips;
