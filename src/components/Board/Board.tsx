@@ -3,13 +3,15 @@ import Cell from "./Cell/Cell";
 import { columns, rows } from "../../utils/labels";
 import { useBoardState } from "../../utils/useBoardState";
 import React from "react";
+import ShipList from "./ShipList/ShipList";
 
 
 
 const Board = () => {
-  const boardState = useBoardState();
+  const { boardState, shipsState, handleShot } = useBoardState();
 
   return (
+    <>
     <BoardContainer>
       {/* Etykiety kolumn */}
       <Cell></Cell> {/* Pusty górny lewy róg */}
@@ -26,11 +28,14 @@ const Board = () => {
               id={`${columns[columnIndex]}${rows[rowIndex]}`}
               coordinate={+`${columnIndex}${rowIndex}`}
               occupied={cell !== undefined}
+              onClick={() => handleShot(rowIndex, columnIndex)}
             ></Cell>
           ))}
         </React.Fragment>
       ))}
     </BoardContainer>
+    <ShipList shipsState={shipsState} />
+    </>
   );
 };
 
