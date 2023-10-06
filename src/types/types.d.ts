@@ -17,5 +17,6 @@ interface CellProps {
   children?: string;
   id?: string;
   coordinate?: number;
+  onClick?: () => void;
 }
 
