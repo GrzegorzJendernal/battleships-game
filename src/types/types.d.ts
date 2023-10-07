@@ -9,14 +9,13 @@ interface Ship {
 
 type Board = (Ship | undefined)[][];
 
+
+
 interface CellProps {
-  occupied?: boolean;
-  hit?: boolean;
-  miss?: boolean;
-  sunk?: boolean;
+  $occupied?: boolean;
+  $hit?: boolean;
+  $sunk?: boolean;
   children?: string;
   id?: string;
-  coordinate?: number;
   onClick?: () => void;
 }
-
