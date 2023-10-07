@@ -11,7 +11,7 @@ export const Cell = styled.div<CellProps>`
       case $hit:
         return `#ccc`;
       case $sunk:
-        return `#eee`;
+        return `#ff0a0a`;
       default:
         return `#fff`;
     }
