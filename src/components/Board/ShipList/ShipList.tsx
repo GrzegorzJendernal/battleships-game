@@ -5,7 +5,7 @@ const ShipList = ({ shipsState }: { shipsState: Ship[] }) => {
       <ul>
         {shipsState.map((ship) => (
           <li key={ship.id}>
-            {ship.name} - {ship.hit ? "Trafiony" : "Nietrafiony"}{" "}
+            {ship.name} - {ship.hits > 0 ? "Trafiony" : "Nietrafiony"}{" "}
             {ship.sunk ? "Zatopiony" : ""}
           </li>
         ))}
