@@ -2,14 +2,14 @@ interface Ship {
   name: string;
   id: number;
   length: number;
-  hit: boolean;
+  hits: 0;
   sunk: boolean;
   orientation: "horizontal" | "vertical";
 }
 
 type CellState = {
   ship?: Ship; // Jeśli komórka zawiera statek, to przypisujemy obiekt statku
-  status: "empty" | "occupied" | "miss" | "hit"; // Status komórki: pusta, pudło, trafienie
+  status: "empty" | "occupied" | "miss" | "hit" | "sunk"; // Status komórki: pusta, pudło, trafienie
 };
 
 type Board = CellState[][];
