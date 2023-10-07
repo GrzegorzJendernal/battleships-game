@@ -24,7 +24,7 @@ const newShips: Ship[] = shipTypes.flatMap((shipType) => {
     name,
     id: shipId++,
     length,
-    hit: false,
+    hits: 0,
     sunk: false,
     orientation: "horizontal",
   }));
