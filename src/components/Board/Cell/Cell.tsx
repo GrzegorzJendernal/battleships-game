@@ -1,10 +1,9 @@
 import { StyledCell } from "./cell.styled"
 
-const Cell = ({children, id, coordinate, occupied, miss, hit}: CellProps) => {
-  console.log(id, coordinate);
+const Cell = ({children, id, $occupied, $hit, onClick}: CellProps) => {
 
   return (
-    <StyledCell id={id} occupied={occupied} miss={miss} hit={hit}>{children}</StyledCell>
+    <StyledCell id={id} $occupied={$occupied} $hit={$hit} onClick={onClick}>{children}</StyledCell>
   );
 };
 
