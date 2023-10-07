@@ -1,7 +1,7 @@
 import { columns, rows } from "./labels";
 
 export const createEmptyBoard = (): Board => {
-  return rows.map(() => columns.map(() => undefined));
+  return rows.map(() => columns.map(() => ({status: "empty"})));
 };
 
 const isCellOccupied = (board: Board, row: number, col: number) => {
@@ -12,7 +12,7 @@ const isCellOccupied = (board: Board, row: number, col: number) => {
     return false;
   }
 
-  return board[row][col] !== undefined;
+  return board[row][col].status === "occupied";
 }
 
 export const canPlaceShip = (
