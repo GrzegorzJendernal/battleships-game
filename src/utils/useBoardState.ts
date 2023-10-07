@@ -3,12 +3,10 @@ import { canPlaceShip, createEmptyBoard } from "./boardHelplers";
 import { ships } from "./ships";
 import { columns, rows } from "./labels";
 
-
 export const useBoardState = () => {
   const [boardState, setBoardState] = useState(createEmptyBoard());
   const [isInitialized, setIsInitialized] = useState(false);
   const [shipsState, setShipsState] = useState(ships);
-
 
   const getRandomCoordinate = (max: number) => {
     return Math.floor(Math.random() * max);
@@ -29,9 +27,9 @@ export const useBoardState = () => {
 
           for (let i = 0; i < ship.length; i++) {
             if (orientation === "horizontal") {
-              newBoard[startRow][startCol + i] = ship;
+              newBoard[startRow][startCol + i] = { status: "occupied", ship };
             } else {
-              newBoard[startRow + i][startCol] = ship;
+              newBoard[startRow + i][startCol] = { status: "occupied", ship };
             }
           }
         }
@@ -50,22 +48,30 @@ export const useBoardState = () => {
 
   const handleShot = (row: number, col: number) => {
     const cell = boardState[row][col];
-  
-    if (cell === undefined) {
+
+    if (cell.status === "empty") {
       // Pudło
-     
-    } else {
+      const newBoard = [...boardState]; // Tworzymy nową kopię planszy
+      newBoard[row][col] = { status: "miss" }; // Aktualizujemy komórkę jako "miss"
+      setBoardState(newBoard); // Ustawiamy nową planszę
+      // Tutaj możesz zaktualizować odpowiednie statystyki i stan statków
+    } else if (cell.ship && cell.status === "occupied") {
       // Trafienie
-      const hitShip = shipsState.find((ship) => ship.id === cell.id);
+      const updatedShips = [...shipsState];
+      const hitShip = updatedShips.find((ship) => ship.id === (cell.ship as Ship).id);
       if (hitShip) {
-        hitShip.hit = true;
-        // Tutaj możesz zaktualizować planszę, aby oznaczyć pole jako trafione, np. boardState[row][col] = "hit"
-        // Sprawdź, czy statek został zatopiony, i jeśli tak, to zaktualizuj jego stan, np. hitShip.sunk = true
-      }
-    }
-    // Tutaj możesz zaktualizować planszę i stan statków w stanie komponentu
-    // np. setBoardState(newBoard) i setShipsState(newShipsState)
+        hitShip.hits ++;
+        if (hitShip.hits === hitShip.length) {hitShip.sunk = true};
+        setShipsState(updatedShips);
+
+        const newBoard = [...boardState]; 
+        newBoard[row][col] = { status: "hit" }; 
+        setBoardState(newBoard);
+      };
+    };
+    // Tutaj możesz zaktualizować stan statków w stanie komponentu
+    // np. setShipsState(newShipsState)
   };
 
-  return { boardState, shipsState, handleShot, };
+  return { boardState, shipsState, handleShot };
 };
