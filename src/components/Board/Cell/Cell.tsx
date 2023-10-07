@@ -1,10 +1,22 @@
-import { StyledCell } from "./cell.styled"
+import { styled } from "styled-components";
 
-const Cell = ({children, id, $occupied, $hit, onClick}: CellProps) => {
-
-  return (
-    <StyledCell id={id} $occupied={$occupied} $hit={$hit} onClick={onClick}>{children}</StyledCell>
-  );
-};
-
-export default Cell;
+export const Cell = styled.div<CellProps>`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ $hit, $sunk }) => {
+    switch (true) {
+      case $hit:
+        return `#ccc`;
+      case $sunk:
+        return `#eee`;
+      default:
+        return `#fff`;
+    }
+  }};
+  border: 1px solid ${({ $occupied }) => ($occupied ? `#ff0000` : `#ccc`)};
+  font-size: 1rem;
+  font-weight: bold;
+`;
