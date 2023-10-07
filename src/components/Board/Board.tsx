@@ -26,6 +26,7 @@ const Board = () => {
                 id={`${columns[columnIndex]}${rows[rowIndex]}`}
                 $occupied={cell.status === "occupied"}
                 $hit={cell.status === "hit"}
+                $sunk={cell.status === "sunk"}
                 onClick={() => handleShot(rowIndex, columnIndex)}
               >
                 {cell.status === "miss" ? "*" : ""}
