@@ -7,9 +7,12 @@ interface Ship {
   orientation: "horizontal" | "vertical";
 }
 
-type Board = (Ship | undefined)[][];
+type CellState = {
+  ship?: Ship; // Jeśli komórka zawiera statek, to przypisujemy obiekt statku
+  status: "empty" | "occupied" | "miss" | "hit"; // Status komórki: pusta, pudło, trafienie
+};
 
-
+type Board = CellState[][];
 
 interface CellProps {
   $occupied?: boolean;
