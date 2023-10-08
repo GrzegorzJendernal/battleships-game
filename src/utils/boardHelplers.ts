@@ -1,7 +1,7 @@
 import { columns, rows } from "./labels";
 
 export const createEmptyBoard = (): Board => {
-  return rows.map(() => columns.map(() => ({status: "empty"})));
+  return rows.map(() => columns.map(() => ({ status: "empty" })));
 };
 
 const isCellOccupied = (board: Board, row: number, col: number) => {
@@ -13,7 +13,16 @@ const isCellOccupied = (board: Board, row: number, col: number) => {
   }
 
   return board[row][col].status === "occupied";
-}
+};
+
+const isDiagonalCellOccupied = (board: Board, row: number, col: number) => {
+  return (
+    isCellOccupied(board, row - 1, col - 1) ||
+    isCellOccupied(board, row - 1, col + 1) ||
+    isCellOccupied(board, row + 1, col - 1) ||
+    isCellOccupied(board, row + 1, col + 1)
+  );
+};
 
 export const canPlaceShip = (
   board: Board,
@@ -25,15 +34,6 @@ export const canPlaceShip = (
   const numRows = board.length;
   const numCols = board[0].length;
   const { length } = ship;
-
-  const isDiagonalCellOccupied = (row: number, col: number) => {
-    return (
-      isCellOccupied(board, row - 1, col - 1) ||
-      isCellOccupied(board, row - 1, col + 1) ||
-      isCellOccupied(board, row + 1, col - 1) ||
-      isCellOccupied(board, row + 1, col + 1)
-    );
-  }
 
   if (orientation === "horizontal") {
     if (startCol + length > numCols) {
@@ -50,7 +50,7 @@ export const canPlaceShip = (
         isCellOccupied(board, startRow + 1, startCol + i) ||
         isCellOccupied(board, startRow, startCol + i - 1) ||
         isCellOccupied(board, startRow, startCol + i + 1) ||
-        isDiagonalCellOccupied(startRow, startCol + i)
+        isDiagonalCellOccupied(board, startRow, startCol + i)
       ) {
         return false;
       }
@@ -70,7 +70,7 @@ export const canPlaceShip = (
         isCellOccupied(board, startRow + i + 1, startCol) ||
         isCellOccupied(board, startRow + i, startCol - 1) ||
         isCellOccupied(board, startRow + i, startCol + 1) ||
-        isDiagonalCellOccupied(startRow + i, startCol)
+        isDiagonalCellOccupied(board, startRow + i, startCol)
       ) {
         return false;
       }
@@ -78,4 +78,4 @@ export const canPlaceShip = (
   }
 
   return true;
-}
+};
