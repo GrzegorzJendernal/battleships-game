@@ -46,32 +46,43 @@ export const useBoardState = () => {
     }
   }, [isInitialized]);
 
+  const markSunkShipCells = (board: Board, ship: Ship) => {
+    const newBoard: Board = board.map((row) =>
+      row.map((cell) => {
+        if (cell.ship && cell.ship.id === ship.id) {
+            return { ...cell, status: "sunk" };
+          }
+        return cell;
+      })
+    );
+  
+    return newBoard;
+  };
+
   const handleShot = (row: number, col: number) => {
     const cell = boardState[row][col];
-
+    const newBoard = [...boardState];
+    setBoardState(newBoard);
     if (cell.status === "empty") {
-      // Pudło
-      const newBoard = [...boardState]; // Tworzymy nową kopię planszy
-      newBoard[row][col] = { status: "miss" }; // Aktualizujemy komórkę jako "miss"
-      setBoardState(newBoard); // Ustawiamy nową planszę
-      // Tutaj możesz zaktualizować odpowiednie statystyki i stan statków
+      newBoard[row][col] = { status: "miss" };
     } else if (cell.ship && cell.status === "occupied") {
-      // Trafienie
       const updatedShips = [...shipsState];
       const hitShip = updatedShips.find((ship) => ship.id === (cell.ship as Ship).id);
       if (hitShip) {
-        hitShip.hits ++;
-        if (hitShip.hits === hitShip.length) {hitShip.sunk = true};
-        setShipsState(updatedShips);
-
-        const newBoard = [...boardState]; 
-        newBoard[row][col] = { status: "hit" }; 
+        hitShip.hits++;
+        if (hitShip.hits === hitShip.length) {
+          hitShip.sunk = true;
+          setBoardState(markSunkShipCells(boardState, hitShip))
+        } else {
+        const newBoard = [...boardState];
+        newBoard[row][col] = { ship: hitShip, status: "hit" };
         setBoardState(newBoard);
-      };
-    };
-    // Tutaj możesz zaktualizować stan statków w stanie komponentu
-    // np. setShipsState(newShipsState)
+        setShipsState(updatedShips);
+        }
+        setShipsState(updatedShips);
+      }
+    }
   };
 
-  return { boardState, shipsState, handleShot };
+  return { boardState, shipsState, handleShot};
 };
