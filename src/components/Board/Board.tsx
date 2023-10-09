@@ -7,7 +7,6 @@ import ShipList from "./ShipList/ShipList";
 
 const Board = () => {
   const { boardState, shipsState, handleShot } = useBoardState();
-
   return (
     <>
       <BoardContainer>
@@ -29,7 +28,7 @@ const Board = () => {
                 $sunk={cell.status === "sunk"}
                 onClick={() => handleShot(rowIndex, columnIndex)}
               >
-                {cell.status === "miss" ? "*" : ""}
+              {cell.status === "miss" ? "*" : ""} 
               </Cell>
             ))}
           </React.Fragment>
