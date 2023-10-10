@@ -7,9 +7,11 @@ interface Ship {
   orientation: "horizontal" | "vertical";
 }
 
+type Status = "empty" | "occupied" | "miss" | "hit" | "sunk";
+
 type CellState = {
   ship?: Ship; 
-  status: "empty" | "occupied" | "miss" | "hit" | "sunk";
+  status: Status;
 };
 
 type Board = CellState[][];
