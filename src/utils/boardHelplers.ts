@@ -4,7 +4,7 @@ export const createEmptyBoard = (): Board => {
   return rows.map(() => columns.map(() => ({ status: "empty" })));
 };
 
-const isCellOccupied = (board: Board, row: number, col: number) => {
+const checkCellStatus = (status: Status, board: Board, row: number, col: number) => {
   const numRows = board.length;
   const numCols = board[0].length;
 
@@ -12,15 +12,15 @@ const isCellOccupied = (board: Board, row: number, col: number) => {
     return false;
   }
 
-  return board[row][col].status === "occupied";
+  return board[row][col].status === status;
 };
 
-const isDiagonalCellOccupied = (board: Board, row: number, col: number) => {
+const checkDiagonalCellStatus = (status: Status, board: Board, row: number, col: number) => {
   return (
-    isCellOccupied(board, row - 1, col - 1) ||
-    isCellOccupied(board, row - 1, col + 1) ||
-    isCellOccupied(board, row + 1, col - 1) ||
-    isCellOccupied(board, row + 1, col + 1)
+    checkCellStatus(status, board, row - 1, col - 1) ||
+    checkCellStatus(status, board, row - 1, col + 1) ||
+    checkCellStatus(status, board, row + 1, col - 1) ||
+    checkCellStatus(status, board, row + 1, col + 1)
   );
 };
 
@@ -30,6 +30,7 @@ export const canPlaceShip = (
   startRow: number,
   startCol: number,
   orientation: "horizontal" | "vertical",
+  status: "occupied",
 ): boolean => {
   const numRows = board.length;
   const numCols = board[0].length;
@@ -41,16 +42,16 @@ export const canPlaceShip = (
     }
 
     for (let i = 0; i < length; i++) {
-      if (isCellOccupied(board, startRow, startCol + i)) {
+      if (checkCellStatus(status, board, startRow, startCol + i)) {
         return false;
       }
 
       if (
-        isCellOccupied(board, startRow - 1, startCol + i) ||
-        isCellOccupied(board, startRow + 1, startCol + i) ||
-        isCellOccupied(board, startRow, startCol + i - 1) ||
-        isCellOccupied(board, startRow, startCol + i + 1) ||
-        isDiagonalCellOccupied(board, startRow, startCol + i)
+        checkCellStatus(status, board, startRow - 1, startCol + i) ||
+        checkCellStatus(status, board, startRow + 1, startCol + i) ||
+        checkCellStatus(status, board, startRow, startCol + i - 1) ||
+        checkCellStatus(status, board, startRow, startCol + i + 1) ||
+        checkDiagonalCellStatus(status, board, startRow, startCol + i)
       ) {
         return false;
       }
@@ -61,16 +62,16 @@ export const canPlaceShip = (
     }
 
     for (let i = 0; i < length; i++) {
-      if (isCellOccupied(board, startRow + i, startCol)) {
+      if (checkCellStatus(status, board, startRow + i, startCol)) {
         return false;
       }
 
       if (
-        isCellOccupied(board, startRow + i - 1, startCol) ||
-        isCellOccupied(board, startRow + i + 1, startCol) ||
-        isCellOccupied(board, startRow + i, startCol - 1) ||
-        isCellOccupied(board, startRow + i, startCol + 1) ||
-        isDiagonalCellOccupied(board, startRow + i, startCol)
+        checkCellStatus(status, board, startRow + i - 1, startCol) ||
+        checkCellStatus(status, board, startRow + i + 1, startCol) ||
+        checkCellStatus(status, board, startRow + i, startCol - 1) ||
+        checkCellStatus(status, board, startRow + i, startCol + 1) ||
+        checkDiagonalCellStatus(status, board, startRow + i, startCol)
       ) {
         return false;
       }
@@ -78,4 +79,17 @@ export const canPlaceShip = (
   }
 
   return true;
+};
+
+export const isAdjacentCellSunk = (board: Board, row: number, col: number) => {
+  if (
+    checkCellStatus("sunk", board, row, col - 1) ||
+    checkCellStatus("sunk", board, row, col + 1) ||
+    checkCellStatus("sunk", board, row + 1, col) ||
+    checkCellStatus("sunk", board, row - 1, col) ||
+    checkDiagonalCellStatus("sunk", board, row, col)
+  ) {
+    return true;
+  }
+  return false;
 };
