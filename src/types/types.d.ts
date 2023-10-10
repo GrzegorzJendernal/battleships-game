@@ -5,6 +5,7 @@ interface Ship {
   hits: 0;
   sunk: boolean;
   orientation: "horizontal" | "vertical";
+  selected: boolean;
 }
 
 type Status = "empty" | "occupied" | "miss" | "hit" | "sunk";
@@ -24,3 +25,11 @@ interface CellProps {
   id?: string;
   onClick?: () => void;
 }
+
+interface BoardProps {
+  boardState: Board;
+  shipsState: Ship[];
+  handleClick: (row: number, col: number) => void;
+}
+
+type GameState = "start" | "preparation" | "game" | "result";
