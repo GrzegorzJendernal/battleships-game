@@ -30,7 +30,7 @@ export const canPlaceShip = (
   startRow: number,
   startCol: number,
   orientation: "horizontal" | "vertical",
-  status: "occupied",
+  status: Status,
 ): boolean => {
   const numRows = board.length;
   const numCols = board[0].length;
