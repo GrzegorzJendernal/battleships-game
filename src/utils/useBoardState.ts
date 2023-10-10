@@ -15,7 +15,7 @@ export const useBoardState = () => {
   const placeShipsRandomly = () => {
     const newBoard = createEmptyBoard();
 
-    for (const ship of ships) {
+    ships.forEach((ship) => {
       let isPlaced = false;
       while (!isPlaced) {
         const startRow = getRandomCoordinate(rows.length);
@@ -25,16 +25,16 @@ export const useBoardState = () => {
         if (canPlaceShip(newBoard, ship, startRow, startCol, orientation)) {
           isPlaced = true;
 
-          for (let i = 0; i < ship.length; i++) {
+          Array.from({ length: ship.length }).forEach((_, index) => {
             if (orientation === "horizontal") {
-              newBoard[startRow][startCol + i] = { status: "occupied", ship };
+              newBoard[startRow][startCol + index] = { status: "occupied", ship };
             } else {
-              newBoard[startRow + i][startCol] = { status: "occupied", ship };
+              newBoard[startRow + index][startCol] = { status: "occupied", ship };
             }
-          }
+          });
         }
       }
-    }
+    });
 
     setBoardState(newBoard);
     setIsInitialized(true);
@@ -50,12 +50,13 @@ export const useBoardState = () => {
     const newBoard: Board = board.map((row) =>
       row.map((cell) => {
         if (cell.ship && cell.ship.id === ship.id) {
-            return { ...cell, status: "sunk" };
-          }
+          return { ...cell, status: "sunk" };
+        }
+
         return cell;
-      })
+      }),
     );
-  
+
     return newBoard;
   };
 
@@ -72,17 +73,17 @@ export const useBoardState = () => {
         hitShip.hits++;
         if (hitShip.hits === hitShip.length) {
           hitShip.sunk = true;
-          setBoardState(markSunkShipCells(boardState, hitShip))
+          setBoardState(markSunkShipCells(boardState, hitShip));
         } else {
-        const newBoard = [...boardState];
-        newBoard[row][col] = { ship: hitShip, status: "hit" };
-        setBoardState(newBoard);
-        setShipsState(updatedShips);
+          const newBoard = [...boardState];
+          newBoard[row][col] = { ship: hitShip, status: "hit" };
+          setBoardState(newBoard);
+          setShipsState(updatedShips);
         }
         setShipsState(updatedShips);
       }
     }
   };
 
-  return { boardState, shipsState, handleShot};
+  return { boardState, shipsState, handleShot };
 };
