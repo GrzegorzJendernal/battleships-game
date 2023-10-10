@@ -1,12 +1,9 @@
 import { BoardContainer } from "./board.styled";
 import { Cell } from "./Cell/Cell";
 import { columns, rows } from "../../utils/labels";
-import { useBoardState } from "../../utils/useBoardState";
 import React from "react";
-import ShipList from "./ShipList/ShipList";
 
-const Board = () => {
-  const { boardState, shipsState, handleShot } = useBoardState();
+const Board = ({ boardState, handleClick }: BoardProps) => {
   return (
     <>
       <BoardContainer>
@@ -26,7 +23,7 @@ const Board = () => {
                 $occupied={cell.status === "occupied"}
                 $hit={cell.status === "hit"}
                 $sunk={cell.status === "sunk"}
-                onClick={() => handleShot(rowIndex, columnIndex)}
+                onClick={() => handleClick(rowIndex, columnIndex)}
               >
               {cell.status === "miss" ? "*" : ""} 
               </Cell>
@@ -34,7 +31,6 @@ const Board = () => {
           </React.Fragment>
         ))}
       </BoardContainer>
-      <ShipList shipsState={shipsState} />
     </>
   );
 };
