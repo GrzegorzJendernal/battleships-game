@@ -8,8 +8,8 @@ interface Ship {
 }
 
 type CellState = {
-  ship?: Ship; // Jeśli komórka zawiera statek, to przypisujemy obiekt statku
-  status: "empty" | "occupied" | "miss" | "hit" | "sunk"; // Status komórki: pusta, pudło, trafienie
+  ship?: Ship; 
+  status: "empty" | "occupied" | "miss" | "hit" | "sunk";
 };
 
 type Board = CellState[][];
