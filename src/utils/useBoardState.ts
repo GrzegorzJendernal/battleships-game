@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { canPlaceShip, createEmptyBoard } from "./boardHelplers";
+import { canPlaceShip, createEmptyBoard, isAdjacentCellSunk } from "./boardHelplers";
 import { ships } from "./ships";
 import { columns, rows } from "./labels";
 
@@ -22,7 +22,7 @@ export const useBoardState = () => {
         const startCol = getRandomCoordinate(columns.length);
         const orientation = Math.random() < 0.5 ? "horizontal" : "vertical";
 
-        if (canPlaceShip(newBoard, ship, startRow, startCol, orientation)) {
+        if (canPlaceShip(newBoard, ship, startRow, startCol, orientation, "occupied")) {
           isPlaced = true;
 
           Array.from({ length: ship.length }).forEach((_, index) => {
@@ -52,7 +52,18 @@ export const useBoardState = () => {
         if (cell.ship && cell.ship.id === ship.id) {
           return { ...cell, status: "sunk" };
         }
+        return cell;
+      }),
+    );
+    return newBoard;
+  };
 
+  const boardWithMisses = (board: Board) => {
+    const newBoard: Board = board.map((row, rowIndex) =>
+      row.map((cell, columnIndex) => {
+        if (cell.status === "empty" && isAdjacentCellSunk(board, rowIndex, columnIndex)) {
+          return { ...cell, status: "miss" };
+        }
         return cell;
       }),
     );
@@ -73,7 +84,8 @@ export const useBoardState = () => {
         hitShip.hits++;
         if (hitShip.hits === hitShip.length) {
           hitShip.sunk = true;
-          setBoardState(markSunkShipCells(boardState, hitShip));
+          const boardWithSunkShip: Board = markSunkShipCells(boardState, hitShip);
+          setBoardState(boardWithMisses(boardWithSunkShip));
         } else {
           const newBoard = [...boardState];
           newBoard[row][col] = { ship: hitShip, status: "hit" };
