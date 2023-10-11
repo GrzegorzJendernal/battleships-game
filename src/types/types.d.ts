@@ -30,7 +30,22 @@ interface CellProps {
 interface BoardProps {
   boardState: Board;
   shipsState: Ship[];
-  handleClick: (row: number, col: number) => void;
+  handleClick?: (row: number, col: number) => void;
+  setTurn?: React.Dispatch<React.SetStateAction<boolean>>;
+  player?: boolean;
 }
 
-type GameState = "start" | "preparation" | "game" | "result";
+type GameState = "start" | "preparation" | "game" | "enemyWin" | "playerWin";
+
+interface EnemyBoardProps {
+  state: GameState;
+  setState: React.Dispatch<React.SetStateAction<GameState>>;
+  setTurn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface PlayerBoardProps {
+  state: GameState;
+  setState: React.Dispatch<React.SetStateAction<GameState>>;
+  turn: boolean;
+  setTurn: React.Dispatch<React.SetStateAction<boolean>>;
+}
