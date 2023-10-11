@@ -6,12 +6,13 @@ interface Ship {
   sunk: boolean;
   orientation: "horizontal" | "vertical";
   selected: boolean;
+  placed: boolean;
 }
 
 type Status = "empty" | "occupied" | "miss" | "hit" | "sunk";
 
 type CellState = {
-  ship?: Ship; 
+  ship?: Ship;
   status: Status;
 };
 
