@@ -1,9 +1,28 @@
+import { useEffect } from "react";
 import { useBoardState } from "../../utils/useBoardState";
 import Board from "../Board/Board";
+import ShipList from "../ShipList/ShipList";
+import { allShipsAreSunk } from "../../utils/shipsHelpers";
 
-const EnemyBoard = () => {
+const EnemyBoard = ({
+  state,
+  setState,
+  setTurn,
+}: EnemyBoardProps) => {
   const { boardState, shipsState, handleShot } = useBoardState();
-  return <Board boardState={boardState} shipsState={shipsState} handleClick={handleShot} />;
+
+  useEffect(() => {
+    if (allShipsAreSunk(shipsState)) {
+      setState("playerWin");
+    }
+  }, [shipsState]);
+
+  return (
+    <>
+      <Board boardState={boardState} shipsState={shipsState} handleClick={handleShot} setTurn={setTurn}/>
+      <ShipList gameState={state} ships={shipsState} />
+    </>
+  );
 };
 
 export default EnemyBoard;
