@@ -1,16 +1,31 @@
-const ShipList = ({ shipsState, gameState }: { shipsState: Ship[]; gameState: GameState }) => {
+import { selectShip, rotateShip } from "../../utils/shipsHelpers";
+
+const ShipList = ({
+  ships,
+  gameState,
+  setShips,
+}: {
+  ships: Ship[];
+  gameState: GameState;
+  setShips: React.Dispatch<React.SetStateAction<Ship[]>>;
+}) => {
   return (
     <div>
       <h2>Lista Statków</h2>
       <ul>
-        {shipsState.map((ship) => (
+        {ships.map((ship) => (
           <li key={ship.id}>
             {ship.name} - {gameState === "game" && `${ship.hits > 0 ? "Trafiony" : "Nietrafiony"}`}{" "}
-            {gameState === "preparation" && <>
-            <button onClick={() => (ship.selected = true)}>select ship</button>
-            <button onClick={() => (ship.orientation === "vertical" ? ship.orientation = "horizontal" : ship.orientation = "vertical")}>rotate</button>
-            </>
-            }{" "}
+            {gameState === "preparation" && (
+              <>
+                <button onClick={() => selectShip(setShips, ships, ship.id)} disabled={ship.placed}>
+                  select ship
+                </button>
+                <button onClick={() => rotateShip(setShips, ships, ship.id)}>
+                  rotate {ship.orientation === "horizontal" ? "verically" : "horizontally"}
+                </button>
+              </>
+            )}{" "}
             {ship.sunk ? "Zatopiony" : ""}
           </li>
         ))}
