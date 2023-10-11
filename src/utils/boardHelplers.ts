@@ -93,3 +93,7 @@ export const isAdjacentCellSunk = (board: Board, row: number, col: number) => {
   }
   return false;
 };
+
+export const getRandomCoordinate = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
