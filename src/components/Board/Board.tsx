@@ -3,7 +3,12 @@ import { Cell } from "./Cell/Cell";
 import { columns, rows } from "../../utils/labels";
 import React from "react";
 
-const Board = ({ boardState, handleClick }: BoardProps) => {
+const Board = ({ boardState, handleClick, setTurn, player }: BoardProps) => {
+  const onCellClick = (row: number, col: number) => {
+    !!handleClick && handleClick(row, col);
+    !!setTurn && setTurn(false);
+  };
+
   return (
     <>
       <BoardContainer>
@@ -20,10 +25,10 @@ const Board = ({ boardState, handleClick }: BoardProps) => {
               <Cell
                 key={columnIndex}
                 id={`${columns[columnIndex]}${rows[rowIndex]}`}
-                $occupied={cell.status === "occupied"}
+                $occupied={player && cell.status === "occupied"}
                 $hit={cell.status === "hit"}
                 $sunk={cell.status === "sunk"}
-                onClick={() => handleClick(rowIndex, columnIndex)}
+                onClick={() => onCellClick(rowIndex, columnIndex)}
               >
               {cell.status === "miss" ? "*" : ""} 
               </Cell>
