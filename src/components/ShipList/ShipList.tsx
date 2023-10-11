@@ -7,7 +7,7 @@ const ShipList = ({
 }: {
   ships: Ship[];
   gameState: GameState;
-  setShips: React.Dispatch<React.SetStateAction<Ship[]>>;
+  setShips?: React.Dispatch<React.SetStateAction<Ship[]>>;
 }) => {
   return (
     <div>
@@ -16,14 +16,14 @@ const ShipList = ({
         {ships.map((ship) => (
           <li key={ship.id}>
             {ship.name} - {gameState === "game" && `${ship.hits > 0 ? "Trafiony" : "Nietrafiony"}`}{" "}
-            {gameState === "preparation" && (
+            {gameState === "preparation" && setShips && (
               <>
                 <button onClick={() => selectShip(setShips, ships, ship.id)} disabled={ship.placed}>
                   select ship
                 </button>
-                <button onClick={() => rotateShip(setShips, ships, ship.id)}>
+                {ship.length > 1 && <button onClick={() => rotateShip(setShips, ships, ship.id)}>
                   rotate {ship.orientation === "horizontal" ? "verically" : "horizontally"}
-                </button>
+                </button>}
               </>
             )}{" "}
             {ship.sunk ? "Zatopiony" : ""}
