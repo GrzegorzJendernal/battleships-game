@@ -17,3 +17,5 @@ export const rotateShip = (setShips: React.Dispatch<React.SetStateAction<Ship[]>
   }
   setShips(updatedShips);
 };
+
+export const allShipsAreSunk = (ships: Ship[]) => ships.every(ship => ship.sunk);
