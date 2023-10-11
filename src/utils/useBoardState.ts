@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { canPlaceShip, createEmptyBoard, isAdjacentCellSunk } from "./boardHelplers";
+import { canPlaceShip, createEmptyBoard, getRandomCoordinate, isAdjacentCellSunk } from "./boardHelplers";
 import { ships, playerShips } from "./ships";
 import { columns, rows } from "./labels";
 
@@ -13,12 +13,9 @@ export const useBoardState = (player?: boolean) => {
     setShipsState(playerShips);
   };
 
-  const getRandomCoordinate = (max: number) => {
-    return Math.floor(Math.random() * max);
-  };
-
   const placeShipsRandomly = () => {
     const newBoard = createEmptyBoard();
+    const ships = [...shipsState];
 
     ships.forEach((ship) => {
       let isPlaced = false;
@@ -78,13 +75,15 @@ export const useBoardState = (player?: boolean) => {
 
   const handleShot = (row: number, col: number) => {
     const cell = boardState[row][col];
-    const newBoard = [...boardState];
-    setBoardState(newBoard);
+
     if (cell.status === "empty") {
+      const newBoard = [...boardState];
       newBoard[row][col] = { status: "miss" };
+      setBoardState(newBoard);
     } else if (cell.ship && cell.status === "occupied") {
       const updatedShips = [...shipsState];
       const hitShip = updatedShips.find((ship) => ship.id === (cell.ship as Ship).id);
+
       if (hitShip) {
         hitShip.hits++;
         if (hitShip.hits === hitShip.length) {
@@ -95,7 +94,6 @@ export const useBoardState = (player?: boolean) => {
           const newBoard = [...boardState];
           newBoard[row][col] = { ship: hitShip, status: "hit" };
           setBoardState(newBoard);
-          setShipsState(updatedShips);
         }
         setShipsState(updatedShips);
       }
@@ -125,7 +123,6 @@ export const useBoardState = (player?: boolean) => {
         ship.id === selectedShip.id ? { ...ship, placed: true, selected: false } : ship,
       );
       setShipsState(updatedShips);
-      console.log(selectedShip);
     }
   };
 
