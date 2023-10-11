@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { canPlaceShip, createEmptyBoard, isAdjacentCellSunk } from "./boardHelplers";
-import { ships } from "./ships";
+import { ships, playerShips } from "./ships";
 import { columns, rows } from "./labels";
 
-export const useBoardState = () => {
+export const useBoardState = (player?: boolean) => {
   const [boardState, setBoardState] = useState(createEmptyBoard());
-  const [isInitialized, setIsInitialized] = useState(false);
-  const [shipsState, setShipsState] = useState(ships);
+  const [isRandom, setIsRandom] = useState(!player ? true : false);
+  const [shipsState, setShipsState] = useState(!player ? ships : playerShips);
+
+  const reset = () => {
+    setBoardState(createEmptyBoard());
+    setShipsState(playerShips);
+  };
 
   const getRandomCoordinate = (max: number) => {
     return Math.floor(Math.random() * max);
@@ -37,14 +42,14 @@ export const useBoardState = () => {
     });
 
     setBoardState(newBoard);
-    setIsInitialized(true);
+    setIsRandom(false);
   };
 
   useEffect(() => {
-    if (!isInitialized) {
+    if (isRandom) {
       placeShipsRandomly();
     }
-  }, [isInitialized]);
+  }, [isRandom]);
 
   const markSunkShipCells = (board: Board, ship: Ship) => {
     const newBoard: Board = board.map((row) =>
@@ -97,5 +102,32 @@ export const useBoardState = () => {
     }
   };
 
-  return { boardState, shipsState, handleShot };
+  const handleShipPlacement = (row: number, col: number) => {
+    const selectedShip = shipsState.find((ship) => ship.selected);
+    if (!selectedShip) return;
+
+    const orientation = selectedShip.orientation;
+
+    if (canPlaceShip(boardState, selectedShip, row, col, orientation, "occupied")) {
+      const newBoard = [...boardState];
+
+      Array.from({ length: selectedShip.length }).forEach((_, index) => {
+        if (orientation === "horizontal") {
+          newBoard[row][col + index] = { status: "occupied", ship: selectedShip };
+        } else {
+          newBoard[row + index][col] = { status: "occupied", ship: selectedShip };
+        }
+      });
+
+      setBoardState(newBoard);
+
+      const updatedShips = shipsState.map((ship) =>
+        ship.id === selectedShip.id ? { ...ship, placed: true, selected: false } : ship,
+      );
+      setShipsState(updatedShips);
+      console.log(selectedShip);
+    }
+  };
+
+  return { boardState, shipsState, handleShot, handleShipPlacement, reset, setIsRandom };
 };
