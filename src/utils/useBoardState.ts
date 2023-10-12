@@ -3,7 +3,7 @@ import { canPlaceShip, createEmptyBoard, getRandomCoordinate, isAdjacentCellSunk
 import { ships, playerShips } from "./ships";
 import { columns, rows } from "./labels";
 
-export const useBoardState = (player?: boolean) => {
+export const useBoardState = (setPlayerTurn: React.Dispatch<React.SetStateAction<boolean>>, player?: boolean, setEnemyShotAgain?: React.Dispatch<React.SetStateAction<boolean>>) => {
   const [boardState, setBoardState] = useState(createEmptyBoard());
   const [isRandom, setIsRandom] = useState(!player ? true : false);
   const [shipsState, setShipsState] = useState(!player ? ships : playerShips);
@@ -80,7 +80,9 @@ export const useBoardState = (player?: boolean) => {
       const newBoard = [...boardState];
       newBoard[row][col] = { status: "miss" };
       setBoardState(newBoard);
+      setPlayerTurn(playerTurn => playerTurn = !playerTurn);
     } else if (cell.ship && cell.status === "occupied") {
+      !!setEnemyShotAgain && setEnemyShotAgain(true);
       const updatedShips = [...shipsState];
       const hitShip = updatedShips.find((ship) => ship.id === (cell.ship as Ship).id);
 
@@ -126,5 +128,5 @@ export const useBoardState = (player?: boolean) => {
     }
   };
 
-  return { boardState, shipsState, handleShot, handleShipPlacement, reset, setIsRandom };
+  return { boardState, shipsState, setShipsState, handleShot, handleShipPlacement, reset, setIsRandom };
 };
