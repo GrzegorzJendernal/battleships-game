@@ -9,7 +9,7 @@ const EnemyBoard = ({
   setState,
   setTurn,
 }: EnemyBoardProps) => {
-  const { boardState, shipsState, handleShot } = useBoardState();
+  const { boardState, shipsState, handleShot } = useBoardState(setTurn);
 
   useEffect(() => {
     if (allShipsAreSunk(shipsState)) {
@@ -19,7 +19,7 @@ const EnemyBoard = ({
 
   return (
     <>
-      <Board boardState={boardState} shipsState={shipsState} handleClick={handleShot} setTurn={setTurn}/>
+      <Board boardState={boardState} shipsState={shipsState} handleClick={handleShot}/>
       <ShipList gameState={state} ships={shipsState} />
     </>
   );
