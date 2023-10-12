@@ -3,14 +3,14 @@ import { getRandomCoordinate } from "./boardHelplers";
 export const enemyIsShooting = (
   boardState: Board,
   handleShot: (row: number, col: number) => void,
-  setPlayerTurn: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
-  const numRows = boardState.length;
-  const numCols = boardState[0].length;
+  const newBoard = [...boardState];
+  const numRows = newBoard.length;
+  const numCols = newBoard[0].length;
   let targetRow = -1;
   let targetCol = -1;
 
-  boardState.forEach((row, rowIndex) => {
+  newBoard.forEach((row, rowIndex) => {
     row.forEach((cell, colIndex) => {
       if (cell.status === "hit" && targetRow === -1 && targetCol === -1) {
         const neighbors = [
@@ -23,7 +23,7 @@ export const enemyIsShooting = (
         neighbors.forEach((neighbor) => {
           const { row: nRow, col: nCol } = neighbor;
           if (nRow >= 0 && nRow < numRows && nCol >= 0 && nCol < numCols) {
-            const neighborCell = boardState[nRow][nCol];
+            const neighborCell = newBoard[nRow][nCol];
             if (neighborCell.status === "empty" || neighborCell.status === "occupied") {
               targetRow = nRow;
               targetCol = nCol;
@@ -41,7 +41,7 @@ export const enemyIsShooting = (
     while (true) {
       const randomRow = getRandomCoordinate(numRows);
       const randomCol = getRandomCoordinate(numCols);
-      const cell = boardState[randomRow][randomCol];
+      const cell = newBoard[randomRow][randomCol];
 
       if (cell.status === "empty" || cell.status === "occupied") {
         handleShot(randomRow, randomCol);
@@ -49,5 +49,4 @@ export const enemyIsShooting = (
       }
     }
   }
-  setPlayerTurn(true);
 };
