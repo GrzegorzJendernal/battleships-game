@@ -1,4 +1,5 @@
 import { selectShip, rotateShip } from "../../utils/shipsHelpers";
+import { List, ListItem, ShipName } from "./shipList.styled";
 
 const ShipList = ({
   ships,
@@ -11,25 +12,24 @@ const ShipList = ({
 }) => {
   return (
     <div>
-      <h2>Lista Statków</h2>
-      <ul>
+      <List>
         {ships.map((ship) => (
-          <li key={ship.id}>
-            {ship.name} - {gameState === "game" && `${ship.hits > 0 ? "Trafiony" : "Nietrafiony"}`}{" "}
+          <ListItem key={ship.id} $selected={ship.selected} $placed={gameState === "preparation" && ship.placed} $hit={!ship.sunk && ship.hits > 0} $sunk={ship.sunk}>
+            <ShipName>{ship.name}</ShipName> {gameState === "game" && `${ship.hits > 0 ? "hit" : "in full strength"}`}{" "}
             {gameState === "preparation" && setShips && (
               <>
                 <button onClick={() => selectShip(setShips, ships, ship.id)} disabled={ship.placed}>
                   select ship
                 </button>
-                {ship.length > 1 && <button onClick={() => rotateShip(setShips, ships, ship.id)}>
+                {ship.length > 1 && <button onClick={() => rotateShip(setShips, ships, ship.id)} disabled={ship.placed}>
                   rotate {ship.orientation === "horizontal" ? "verically" : "horizontally"}
                 </button>}
               </>
             )}{" "}
-            {ship.sunk ? "Zatopiony" : ""}
-          </li>
+            {ship.sunk ? "& sunk" : ""}
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };
