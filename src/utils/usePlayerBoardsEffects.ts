@@ -20,13 +20,12 @@ const usePlayerBoardEffects = (
 
   useEffect(() => {
     if (enemyShotAgain) {
+      setEnemyShotAgain(false);
       setTimeout(() => {
         enemyIsShooting(boardState, handleShot);
-        setEnemyShotAgain(false);
-      }, 1000);
-      // Resetuj zmienną po drugim strzale
+      }, 500);
     }
-  }, [enemyShotAgain]);
+  }, [enemyShotAgain, handleShot]);
 
   useEffect(() => {
     if (allShipsAreSunk(shipsState)) {
