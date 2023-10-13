@@ -40,6 +40,7 @@ type GameState = "start" | "preparation" | "game" | "enemyWin" | "playerWin";
 interface EnemyBoardProps {
   state: GameState;
   setState: React.Dispatch<React.SetStateAction<GameState>>;
+  turn: boolean;
   setTurn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
