@@ -15,7 +15,8 @@ export const useBoardState = (setPlayerTurn: React.Dispatch<React.SetStateAction
 
   const placeShipsRandomly = () => {
     const newBoard = createEmptyBoard();
-    const ships = [...shipsState];
+    const ships = [...shipsState ];
+    const placedShips = ships.map((ship) => {return {...ship, placed: true}});
 
     ships.forEach((ship) => {
       let isPlaced = false;
@@ -39,6 +40,7 @@ export const useBoardState = (setPlayerTurn: React.Dispatch<React.SetStateAction
     });
 
     setBoardState(newBoard);
+    setShipsState(placedShips)
     setIsRandom(false);
   };
 
