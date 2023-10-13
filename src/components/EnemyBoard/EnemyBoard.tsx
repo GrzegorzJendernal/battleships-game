@@ -7,6 +7,7 @@ import { allShipsAreSunk } from "../../utils/shipsHelpers";
 const EnemyBoard = ({
   state,
   setState,
+  turn,
   setTurn,
 }: EnemyBoardProps) => {
   const { boardState, shipsState, handleShot } = useBoardState(setTurn);
@@ -19,7 +20,7 @@ const EnemyBoard = ({
 
   return (
     <>
-      <Board boardState={boardState} shipsState={shipsState} handleClick={handleShot}/>
+      <Board boardState={boardState} shipsState={shipsState} handleClick={turn ? handleShot : undefined}/>
       <ShipList gameState={state} ships={shipsState} />
     </>
   );
