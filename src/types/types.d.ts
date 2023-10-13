@@ -50,3 +50,10 @@ interface PlayerBoardProps {
   turn: boolean;
   setTurn: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+interface ShipListStyledProps {
+  $selected?: boolean;
+  $placed?: boolean;
+  $hit?: boolean;
+  $sunk?: boolean;
+}
