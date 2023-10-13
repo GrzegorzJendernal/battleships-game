@@ -80,7 +80,7 @@ export const useBoardState = (setPlayerTurn: React.Dispatch<React.SetStateAction
       const newBoard = [...boardState];
       newBoard[row][col] = { status: "miss" };
       setBoardState(newBoard);
-      setPlayerTurn(playerTurn => playerTurn = !playerTurn);
+      setPlayerTurn(playerTurn => !playerTurn);
     } else if (cell.ship && cell.status === "occupied") {
       !!setEnemyShotAgain && setEnemyShotAgain(true);
       const updatedShips = [...shipsState];
