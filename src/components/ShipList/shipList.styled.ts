@@ -9,6 +9,7 @@ export const ListItem = styled.li<ShipListStyledProps>`
   display: grid;
   grid-template-columns: 170px 1fr 150px;
   grid-gap: 5px;
+  margin-bottom: 5px;
   color: ${({ $hit, $sunk, $selected, $placed }) => {
     switch (true) {
       case $hit:
@@ -28,6 +29,11 @@ export const ListItem = styled.li<ShipListStyledProps>`
     css`
       text-decoration: line-through;
     `}
+
+    @media (max-width: 767px) {
+    font-size: 0.6rem;
+    grid-template-columns: 100px 1fr 100px;
+  }
 `;
 
 export const ShipName = styled.span`
