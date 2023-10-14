@@ -1,27 +1,28 @@
-# React + TypeScript + Vite
+# [React Battleships Game](https://grzegorzjendernal.github.io/battleships-game/)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Logo](https://raw.githubusercontent.com/GrzegorzJendernal/battleships-game/main/public/shareImage.png)
 
-Currently, two official plugins are available:
+A popular ship game written in React with TypeScript. I hope it will give you some fun.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo
 
-## Expanding the ESLint configuration
+[React Battleships Game](https://grzegorzjendernal.github.io/battleships-game/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Preview
 
-- Configure the top-level `parserOptions` property like this:
+!["Preview of the app"](https://raw.githubusercontent.com/GrzegorzJendernal/battleships-game/main/demo.gif)
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Technologies
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- TypeScript
+- React
+- NPM
+- Vite
+- React Hooks
+- JavaScript: ES6+
+- styled components
+- Responsive Web Design
+- Figma
+- CSS Grid
+- CSS Flexbox
+- Dall-e image creator
