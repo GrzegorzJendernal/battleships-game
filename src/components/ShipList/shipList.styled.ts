@@ -1,5 +1,18 @@
 import { css, styled } from "styled-components";
 
+export const ListBox = styled.div<{ $game: boolean }>`
+  display: flex;
+  justify-content: center;
+
+  ${({ $game }) =>
+    !!$game &&
+    css`
+      @media (max-width: 920px) {
+        align-items: end;
+      }
+    `}
+`;
+
 export const List = styled.ul`
   list-style: none;
   padding: 0;
@@ -7,7 +20,6 @@ export const List = styled.ul`
 
 export const ListItem = styled.li<ShipListStyledProps>`
   display: grid;
-  grid-template-columns: 170px 1fr 150px;
   grid-gap: 5px;
   margin-bottom: 5px;
   color: ${({ $hit, $sunk, $selected, $placed }) => {
@@ -30,13 +42,45 @@ export const ListItem = styled.li<ShipListStyledProps>`
       text-decoration: line-through;
     `}
 
-    @media (max-width: 767px) {
-    font-size: 0.6rem;
-    grid-template-columns: 100px 1fr 100px;
-  }
+  ${({ $game }) =>
+    $game
+      ? css`
+          grid-template-columns: 170px auto;
+          justify-self: center;
+
+          @media (max-width: 767px) {
+            font-size: 0.6rem;
+            grid-template-columns: auto 50px;
+          }
+        `
+      : css`
+          grid-template-columns: 170px 1fr 150px;
+
+          @media (max-width: 767px) {
+            font-size: 0.6rem;
+            grid-template-columns: 100px 1fr 100px;
+          }
+        `}
 `;
 
-export const ShipName = styled.span`
+export const ShipName = styled.span<{ $game: boolean }>`
   font-weight: 700;
   text-transform: uppercase;
+
+  ${({ $game }) =>
+    !!$game &&
+    css`
+      @media (max-width: 767px) {
+        display: none;
+      }
+    `}
+`;
+
+export const ShipNumber = styled.span`
+  display: none;
+
+  @media (max-width: 767px) {
+    display: inline;
+    font-weight: 700;
+  }
 `;
