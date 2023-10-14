@@ -4,24 +4,27 @@ import EnemyBoard from "../components/EnemyBoard/EnemyBoard";
 import PlayerBoard from "../components/PlayerBoard/PlayerBoard";
 import { GlobalStyle } from "./GlobalStyle";
 import StartScreen from "../components/StartScreen/StartScreen";
-import Result from "../components/Result/Result";
+import { Header } from "../components/Header/Header";
+import { Wrapper } from "../components/Wrapper/Wrapper";
 
 const App = () => {
   const [gameState, setGameState] = useState<GameState>("start");
   const [playerTurn, setPlayerTurn] = useState(true);
-  
+
   return (
-    <>
+    <Wrapper>
       <GlobalStyle />
-      <div>Tu będzie zajebiaszcza gra w statki</div>
+      <Header>BattleShips Game</Header>
+      {(gameState === "start" || gameState === "playerWin" || gameState === "enemyWin") && (
+          <StartScreen state={gameState} setState={setGameState} />
+        )}
       <Container>
-        {gameState === "start" && <StartScreen setState={setGameState}/>}
-        <PlayerBoard state={gameState} setState={setGameState} turn={playerTurn} setTurn={setPlayerTurn}/>
-        {gameState === "game" && <EnemyBoard state={gameState} setState={setGameState} setTurn={setPlayerTurn}/>}
-        {gameState === "enemyWin" && <Result state={gameState}/>}
-        {gameState === "playerWin" && <Result state={gameState}/>}
+        <PlayerBoard state={gameState} setState={setGameState} turn={playerTurn} setTurn={setPlayerTurn} />
+        {gameState === "game" && (
+          <EnemyBoard state={gameState} setState={setGameState} turn={playerTurn} setTurn={setPlayerTurn} />
+        )}
       </Container>
-    </>
+    </Wrapper>
   );
 };
 

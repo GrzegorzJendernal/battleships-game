@@ -1,17 +1,18 @@
-import { BoardContainer } from "./board.styled";
+import { BoardContainer, Title } from "./board.styled";
 import { Cell } from "./Cell/Cell";
 import { columns, rows } from "../../utils/labels";
 import React from "react";
 
-const Board = ({ boardState, handleClick, setTurn, player }: BoardProps) => {
+const Board = ({ boardState, handleClick, setTurn, player, turn }: BoardProps) => {
   const onCellClick = (row: number, col: number) => {
     !!handleClick && handleClick(row, col);
     !!setTurn && setTurn(false);
   };
 
   return (
-    <>
-      <BoardContainer>
+    <div>
+    <Title>{!player ? "Enemy" : "Player"} Board</Title>
+      <BoardContainer $playerTurn={!player && turn}>
         {/* Etykiety kolumn */}
         <Cell></Cell> {/* Pusty górny lewy róg */}
         {columns.map((column, columnIndex) => (
@@ -30,13 +31,13 @@ const Board = ({ boardState, handleClick, setTurn, player }: BoardProps) => {
                 $sunk={cell.status === "sunk"}
                 onClick={() => onCellClick(rowIndex, columnIndex)}
               >
-              {cell.status === "miss" ? "*" : ""} 
+              {cell.status === "miss" ? "•" : `${cell.status === "hit" || cell.status === "sunk" ? "X" : ""}`} 
               </Cell>
             ))}
           </React.Fragment>
         ))}
       </BoardContainer>
-    </>
+    </div>
   );
 };
 
