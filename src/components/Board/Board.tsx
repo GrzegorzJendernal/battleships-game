@@ -13,12 +13,10 @@ const Board = ({ boardState, handleClick, setTurn, player, turn }: BoardProps) =
     <div>
     <Title>{!player ? "Enemy" : "Player"} Board</Title>
       <BoardContainer $playerTurn={!player && turn}>
-        {/* Etykiety kolumn */}
-        <Cell></Cell> {/* Pusty górny lewy róg */}
+        <Cell></Cell> 
         {columns.map((column, columnIndex) => (
           <Cell key={columnIndex}>{column}</Cell>
         ))}
-        {/* Plansza gry */}
         {boardState.map((row, rowIndex) => (
           <React.Fragment key={rowIndex}>
             <Cell>{rows[rowIndex]}</Cell>
