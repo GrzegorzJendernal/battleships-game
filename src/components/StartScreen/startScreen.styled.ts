@@ -1,8 +1,9 @@
 import { styled } from "styled-components";
 import welcome from "../../assets/welcome.jpg";
+import endGame from "../../assets/endGame.jpg";
 
-export const WelcomeImage = styled.div`
-  background-image: url(${welcome});
+export const Image = styled.div<{$state: GameState}>`
+  background-image: ${({$state}) => $state === "start" ? `url(${welcome})` : `url(${endGame})`};
   background-size: 100%;
   max-width: 1024px;
   width: 80vw;
