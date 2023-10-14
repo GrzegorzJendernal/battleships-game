@@ -14,7 +14,9 @@ const usePlayerBoardEffects = (
 ) => {
   useEffect(() => {
     if (!turn && state === "game") {
-      enemyIsShooting(boardState, handleShot);
+      setTimeout(() => {
+        enemyIsShooting(boardState, handleShot);
+      }, 500);
     }
   }, [turn, state]);
 
