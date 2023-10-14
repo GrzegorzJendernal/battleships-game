@@ -1,10 +1,20 @@
-import { Button, WelcomeImage } from "./startScreen.styled";
+import { Button, Image } from "./startScreen.styled";
 
-const StartScreen = ({ setState }: { setState: React.Dispatch<React.SetStateAction<GameState>> }) => {
+const StartScreen = ({
+  state,
+  setState,
+}: {
+  state: GameState;
+  setState: React.Dispatch<React.SetStateAction<GameState>>;
+}) => {
   return (
-    <WelcomeImage>
-      <Button onClick={() => setState("preparation")}>Start Game</Button>
-    </WelcomeImage>
+    <>
+      {state === "playerWin" && <h2>Congratulations! You win!</h2>}
+      {state === "enemyWin" && <h2>You lost. 😟 Do you want to try again?</h2>}
+      <Image $state={state}>
+        <Button onClick={() => setState("preparation")}>Start Game</Button>
+      </Image>
+    </>
   );
 };
 
