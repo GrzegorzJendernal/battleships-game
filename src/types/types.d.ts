@@ -33,6 +33,7 @@ interface BoardProps {
   handleClick?: (row: number, col: number) => void;
   setTurn?: React.Dispatch<React.SetStateAction<boolean>>;
   player?: boolean;
+  turn?: boolean;
 }
 
 type GameState = "start" | "preparation" | "game" | "enemyWin" | "playerWin";
@@ -56,4 +57,9 @@ interface ShipListStyledProps {
   $placed?: boolean;
   $hit?: boolean;
   $sunk?: boolean;
+  $game?:boolean;
+}
+
+interface BoardContainerProps {
+  $playerTurn?: boolean;
 }
