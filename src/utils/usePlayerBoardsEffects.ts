@@ -11,7 +11,15 @@ const usePlayerBoardEffects = (
   setEnemyShotAgain: React.Dispatch<React.SetStateAction<boolean>>,
   setState: React.Dispatch<React.SetStateAction<GameState>>,
   handleShot: (row: number, col: number) => void,
+  reset: () => void,
 ) => {
+
+  useEffect(() => {
+    if (state === "preparation") {
+      reset()
+    }
+  }, [state]);
+
   useEffect(() => {
     if (!turn && state === "game") {
       setTimeout(() => {

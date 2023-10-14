@@ -14,7 +14,7 @@ const PlayerBoard = ({ state, setState, turn, setTurn }: PlayerBoardProps) => {
     player,
     setEnemyShotAgain,
   );
-  usePlayerBoardEffects(turn, state, boardState, shipsState, enemyShotAgain, setEnemyShotAgain, setState, handleShot);
+  usePlayerBoardEffects(turn, state, boardState, shipsState, enemyShotAgain, setEnemyShotAgain, setState, handleShot, reset);
 
   if (state === "preparation")
     return (
